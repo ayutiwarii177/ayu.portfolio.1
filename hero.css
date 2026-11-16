@@ -1,0 +1,298 @@
+@layer components {
+  .hero {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    padding: 6.5rem var(--gutter) clamp(1.5rem, 4vw, 3rem);
+    overflow: hidden;
+  }
+  .hero__canvas {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 2s ease 0.2s;
+  }
+  html.is-ready .hero__canvas {
+    opacity: 1;
+  }
+  .hero__flash {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(circle at 50% 45%, rgb(232 241 255 / 0.95), rgb(61 139 255 / 0.55) 35%, transparent 70%);
+  }
+  .hero__inner {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: clamp(2rem, 6vh, 4rem);
+    width: 100%;
+    max-width: 90rem;
+    margin-inline: auto;
+  }
+  .hero__stage {
+    margin-block: auto;
+    transform-origin: 50% 60%;
+    will-change: transform;
+  }
+
+  /* ── Constructed wordmark ─────────────────────────────── */
+  .wm {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    filter: drop-shadow(0 0 20px rgb(61 139 255 / 0.32));
+  }
+  .wm--wide {
+    display: none;
+  }
+  @media (min-width: 48rem) {
+    .wm--wide {
+      display: block;
+    }
+    .wm--stack {
+      display: none;
+    }
+  }
+  .wm__letters {
+    fill: none;
+    stroke-width: 7;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 2.5;
+    stroke-linecap: butt;
+  }
+  .wm__stroke {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  html.is-ready .wm__stroke {
+    animation: wm-draw 1.3s var(--ease-out-expo) calc(0.2s + var(--i) * 0.07s) forwards;
+  }
+  @keyframes wm-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .wm__lit {
+    stroke: #fff;
+    stroke-opacity: var(--k, 0);
+    stroke-width: 7;
+  }
+  .wm__guide {
+    stroke: rgb(138 184 255 / 0.26);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+    transform-box: fill-box;
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  html.is-ready .wm__guide {
+    animation: wm-guide 1.3s var(--ease-out-expo) calc(var(--gi) * 0.09s) forwards;
+  }
+  @keyframes wm-guide {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* ── Lower third ──────────────────────────────────────── */
+  .hero__foot {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'motto enter'
+      'pillars pillars';
+    gap: 1.5rem 1rem;
+    align-items: end;
+  }
+  .hero__motto {
+    grid-area: motto;
+    font-stretch: 78%;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 4.6vw, 4.4rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .hero__pillars {
+    grid-area: pillars;
+  }
+  .hero__enter {
+    grid-area: enter;
+  }
+  /* Phones: the motto's longest word is wider than half the screen, so everything stacks. */
+  @media (max-width: 39.99rem) {
+    .hero__foot {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        'motto'
+        'pillars'
+        'enter';
+    }
+  }
+  @media (min-width: 64rem) {
+    .hero__foot {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto;
+      grid-template-areas: 'motto pillars enter';
+      gap: 3rem;
+    }
+  }
+  .mw {
+    display: block;
+    width: fit-content;
+    overflow: hidden;
+    padding-block: 0.06em;
+    cursor: default;
+  }
+  .mw__in {
+    display: inline-block;
+    transform: translateY(115%);
+    transition: color 0.35s, letter-spacing 0.6s var(--ease-out-expo);
+  }
+  html.is-ready .mw__in {
+    animation: mw-rise 1s var(--ease-out-expo) var(--d) forwards;
+  }
+  @keyframes mw-rise {
+    to {
+      transform: translateY(0);
+    }
+  }
+  .mw:hover .mw__in {
+    color: var(--color-volt-hi);
+    letter-spacing: 0.01em;
+  }
+  .hero__pillars {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 1.1rem;
+    color: var(--color-mist);
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+  }
+  .hero__pillar {
+    opacity: 0;
+  }
+  html.is-ready .hero__pillar {
+    animation: hero-in 1s ease var(--d) forwards;
+  }
+  @keyframes hero-in {
+    to {
+      opacity: 1;
+    }
+  }
+  .hero__enter {
+    opacity: 0;
+    justify-self: start;
+  }
+  @media (min-width: 64rem) {
+    .hero__enter {
+      justify-self: end;
+    }
+  }
+  html.is-ready .hero__enter {
+    animation: hero-in 0.9s ease 1.35s forwards;
+  }
+
+  /* ── Enter control ────────────────────────────────────── */
+  .enter {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    color: var(--color-ice);
+    background: radial-gradient(circle, rgb(61 139 255 / 0.1), transparent 70%);
+    transition: transform 0.5s var(--ease-out-expo), background-color 0.4s;
+  }
+  @media (min-width: 64rem) {
+    .enter {
+      width: 7.25rem;
+      height: 7.25rem;
+    }
+  }
+  .enter:hover,
+  .enter:focus-visible {
+    transform: scale(1.08);
+    background: radial-gradient(circle, rgb(61 139 255 / 0.28), transparent 72%);
+  }
+  .enter:active {
+    transform: scale(0.95);
+  }
+  .enter__ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    fill: none;
+  }
+  .enter__orbit {
+    stroke: rgb(138 184 255 / 0.4);
+    stroke-width: 1;
+    transition: stroke 0.4s;
+  }
+  .enter:hover .enter__orbit,
+  .enter:focus-visible .enter__orbit {
+    stroke: var(--color-volt-hi);
+  }
+  .enter__dash {
+    stroke: var(--color-volt-hi);
+    stroke-width: 1.2;
+    stroke-dasharray: 2 7;
+    transform-origin: 60px 60px;
+    animation: enter-spin 24s linear infinite;
+  }
+  .enter:hover .enter__dash,
+  .enter:focus-visible .enter__dash {
+    animation-duration: 6s;
+  }
+  @keyframes enter-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .enter__tick {
+    stroke: var(--color-ice);
+    stroke-width: 1.5;
+  }
+  .enter__label {
+    position: relative;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__canvas {
+      transition: none;
+    }
+    .wm__stroke {
+      stroke-dashoffset: 0;
+      animation: none !important;
+    }
+    .wm__guide {
+      transform: none;
+      animation: none !important;
+    }
+    .mw__in {
+      transform: none;
+      animation: none !important;
+    }
+    .hero__pillar,
+    .hero__enter {
+      opacity: 1;
+      animation: none !important;
+    }
+    .enter__dash {
+      animation: none;
+    }
+  }
+}

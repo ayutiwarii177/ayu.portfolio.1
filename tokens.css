@@ -1,0 +1,29 @@
+/* Design tokens. One place to change the palette or the type. */
+@theme {
+  --color-*: initial;
+
+  /* Surfaces: obsidian is a volcanic glass, black with a cold cast. */
+  --color-obsidian: #05060b;
+  --color-basalt: #0a0d16;
+  --color-slate: #131929;
+  --color-line: #222a3f;
+
+  /* Text: icy white, then two quieter steps (both pass AA on obsidian). */
+  --color-ice: #e8f1ff;
+  --color-mist: #a3afc8;
+  --color-fog: #6e7a96;
+
+  /* Accents: electric blue does the work, violet is kept for a few moments only. */
+  --color-volt: #3d8bff;
+  --color-volt-hi: #8ab8ff;
+  --color-ultraviolet: #8c6bff;
+  --color-ultraviolet-hi: #b4a0ff;
+
+  /* Errors only. Everything else stays in the blue and violet family. */
+  --color-alert: #ff8fa3;
+
+  --font-sans: 'Bricolage Grotesque', 'Inter Display', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}

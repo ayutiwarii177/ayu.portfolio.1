@@ -1,0 +1,14 @@
+/* Entry stylesheet. Tailwind v4 compiles this file; each partial below adds one concern.
+   Rule of thumb: Tailwind utilities handle layout and spacing inside the JSX, and the partials
+   (inside @layer components) handle the bespoke effects: glass, wireframes, cursor, reveals. */
+@import 'tailwindcss';
+@import './tokens.css';
+@import './base.css';
+@import './ui.css';
+@import './shell.css';
+@import './hero.css';
+@import './about.css';
+@import './engine.css';
+@import './projects.css';
+@import './timeline.css';
+@import './contact.css';

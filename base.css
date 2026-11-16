@@ -1,0 +1,71 @@
+@layer base {
+  :root {
+    color-scheme: dark;
+    --progress: 0;
+    --gutter: clamp(1.25rem, 5vw, 4rem);
+    --measure: 62ch;
+  }
+
+  html {
+    background: var(--color-obsidian);
+    color: var(--color-ice);
+    -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--color-line) var(--color-obsidian);
+    scrollbar-width: thin;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-optical-sizing: auto;
+    background: var(--color-obsidian);
+    min-height: 100vh;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html.is-locked,
+  html.is-locked body {
+    overflow: hidden;
+  }
+
+  ::selection {
+    background: var(--color-volt);
+    color: var(--color-obsidian);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-volt-hi);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  button,
+  [role='button'],
+  a,
+  summary {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  img,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-delay: 0s !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      transition-delay: 0s !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

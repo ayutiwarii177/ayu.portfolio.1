@@ -1,0 +1,158 @@
+/* Timeline: a spine that fills with light as you scroll, with chapters and entries along it. */
+@layer components {
+  .tl__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .tl {
+    position: relative;
+    --fill: 0;
+    padding-left: 2rem;
+  }
+  .tl__spine {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0.5rem;
+    width: 1px;
+    background: var(--color-line);
+  }
+  .tl__fill {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--color-volt), var(--color-ultraviolet-hi));
+    box-shadow: 0 0 14px 1px rgb(61 139 255 / 0.8);
+    transform: scaleY(var(--fill));
+    transform-origin: top;
+    will-change: transform;
+  }
+
+  .tl__lane {
+    padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
+    animation: tl-in 0.8s var(--ease-out-expo) both;
+  }
+  .tl__lane:last-child {
+    padding-bottom: 0;
+  }
+  @keyframes tl-in {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+  }
+  .tl__lane-name {
+    margin-bottom: 1.6rem;
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    line-height: 1;
+  }
+  .tl__lane-name span {
+    display: inline-block;
+    color: var(--color-ice);
+  }
+  .tl__list {
+    display: grid;
+    gap: 0;
+  }
+
+  .tl__item {
+    position: relative;
+    padding-bottom: 2.4rem;
+  }
+  .tl__item:last-child {
+    padding-bottom: 0;
+  }
+  /* The node sits on the spine and lights when the spine reaches it. */
+  .tl__node {
+    position: absolute;
+    top: 0.45rem;
+    left: -1.95rem;
+    width: 0.9rem;
+    height: 0.9rem;
+    border: 1px solid var(--color-line);
+    border-radius: 50%;
+    background: var(--color-obsidian);
+    transition:
+      background-color 0.6s,
+      border-color 0.6s,
+      box-shadow 0.8s;
+  }
+  .tl__item.is-lit .tl__node {
+    border-color: var(--color-volt-hi);
+    background: var(--color-volt);
+    box-shadow:
+      0 0 0 4px rgb(61 139 255 / 0.18),
+      0 0 18px rgb(61 139 255 / 0.9);
+  }
+  .tl__item.is-empty.is-lit .tl__node {
+    border-color: var(--color-ultraviolet-hi);
+    background: var(--color-ultraviolet);
+    box-shadow:
+      0 0 0 4px rgb(140 107 255 / 0.18),
+      0 0 18px rgb(140 107 255 / 0.9);
+  }
+  .tl__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.9rem;
+  }
+  /* Only the title changes with the scroll. Body text keeps its full contrast at all times. */
+  .tl__title {
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+    line-height: 1;
+    color: var(--color-mist);
+    transition: color 0.7s;
+  }
+  .tl__item.is-lit .tl__title {
+    color: var(--color-ice);
+  }
+  .tl__item.is-empty .tl__title {
+    color: var(--color-ultraviolet-hi);
+  }
+  .tl__when {
+    font-size: 0.9rem;
+  }
+  .tl__text {
+    margin-top: 0.7rem;
+  }
+  .tl__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
+  }
+  .tl__open {
+    margin-top: 1rem;
+  }
+
+  /* Wide screens: chapter names sit in a left column, entries run down the spine on the right. */
+  @media (min-width: 64rem) {
+    .tl {
+      padding-left: 0;
+    }
+    .tl__spine {
+      left: 33.3333%;
+    }
+    .tl__lane {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    }
+    .tl__lane-name {
+      align-self: start;
+      position: sticky;
+      top: 6.5rem;
+      margin: 0;
+      padding-right: 3rem;
+      text-align: right;
+    }
+    .tl__item {
+      padding-left: 3rem;
+    }
+    .tl__node {
+      left: -0.45rem;
+    }
+  }
+}
